@@ -12,6 +12,17 @@ public class MongoConfiguration implements AutoloadedConfigurations {
     public static final ConfigurationDefinition<Boolean>  ADJUST_TRACKING_TABLES_ON_STARTUP;
     public static final ConfigurationDefinition<Boolean>  SUPPORTS_VALIDATOR;
     public static final ConfigurationDefinition<Boolean>  RETRY_WRITES;
+    
+    // Mongosh configuration
+    public static final ConfigurationDefinition<String>   MONGOSH_PATH;
+    public static final ConfigurationDefinition<Integer>  MONGOSH_TIMEOUT_SECONDS;
+    public static final ConfigurationDefinition<Boolean>  MONGOSH_KEEP_TEMP_FILES;
+    public static final ConfigurationDefinition<String>   MONGOSH_TEMP_FILENAME;
+    public static final ConfigurationDefinition<String>   MONGOSH_TEMP_DIRECTORY;
+    public static final ConfigurationDefinition<String>   MONGOSH_EXTRA_ARGS;
+    public static final ConfigurationDefinition<String>   MONGOSH_LOG_FILE;
+    public static final ConfigurationDefinition<Boolean>  MONGOSH_TEMP_KEEP;
+    public static final ConfigurationDefinition<String>   MONGOSH_TEMP_NAME;
 
     static {
         ConfigurationDefinition.Builder builder = new ConfigurationDefinition.Builder(LIQUIBASE_MONGO_NAMESPACE);
@@ -34,6 +45,48 @@ public class MongoConfiguration implements AutoloadedConfigurations {
                 .setDescription("Setting this property to false will add retryWrites=false to connection URL." +
                         "This will permit usage on Mongo Versions not supporting retryWrites, like Amazon DocumentDB")
                 .setDefaultValue(TRUE)
+                .build();
+
+        // Mongosh configuration
+        MONGOSH_PATH = builder.define("mongoshPath", String.class)
+                .setDescription("Path to mongosh executable. If not specified, searches system PATH and LIQUIBASE_MONGOSH_PATH environment variable.")
+                .build();
+
+        MONGOSH_TIMEOUT_SECONDS = builder.define("mongoshTimeoutSeconds", Integer.class)
+                .setDescription("Maximum time in seconds to wait for mongosh script execution")
+                .setDefaultValue(300) // 5 minutes default
+                .build();
+
+        MONGOSH_KEEP_TEMP_FILES = builder.define("mongoshKeepTempFiles", Boolean.class)
+                .setDescription("Whether to retain temporary mongosh script files after execution for debugging")
+                .setDefaultValue(false)
+                .build();
+
+        MONGOSH_TEMP_FILENAME = builder.define("mongoshTempFilename", String.class)
+                .setDescription("Custom filename pattern for temporary mongosh script files")
+                .build();
+
+        MONGOSH_TEMP_DIRECTORY = builder.define("mongoshTempDirectory", String.class)
+                .setDescription("Directory for temporary mongosh script files. If not specified, uses system temp directory")
+                .setDefaultValue(System.getProperty("java.io.tmpdir"))
+                .build();
+
+        MONGOSH_EXTRA_ARGS = builder.define("mongoshExtraArgs", String.class)
+                .setDescription("Additional command line arguments passed to mongosh executable")
+                .setDefaultValue("--quiet --norc")
+                .build();
+
+        MONGOSH_LOG_FILE = builder.define("mongoshLogFile", String.class)
+                .setDescription("File path for capturing mongosh execution output and errors")
+                .build();
+
+        MONGOSH_TEMP_KEEP = builder.define("mongoshTempKeep", Boolean.class)
+                .setDescription("Whether to retain temporary mongosh script files after execution")
+                .setDefaultValue(false)
+                .build();
+                
+        MONGOSH_TEMP_NAME = builder.define("mongoshTempName", String.class)
+                .setDescription("Custom filename pattern for temporary mongosh script files")
                 .build();
     }
 }

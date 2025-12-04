@@ -1,1 +1,2 @@
 liquibase.nosql.executor.NoSqlExecutor
+liquibase.nosql.executor.MongoshExecutor
