@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @DatabaseChange(
     name = "mongo", 
@@ -21,7 +22,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class MongoshChange extends AbstractSQLChange {
-    
+    private String MONGO_PROPERTY_NAME = "mongo";
+    private String DBMS_PROPERTY_NAME = "dbms";
+
     private String mongo;
 
     public void setMongo(String mongo) {
@@ -61,5 +64,9 @@ public class MongoshChange extends AbstractSQLChange {
         }
         
         return validationErrors;
+    }
+
+    public Set<String> getSerializableFields() {
+        return Set.of(MONGO_PROPERTY_NAME, DBMS_PROPERTY_NAME);
     }
 }

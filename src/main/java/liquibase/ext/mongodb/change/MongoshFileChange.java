@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @DatabaseChange(
     name = "mongoFile", 
@@ -32,6 +33,10 @@ import java.util.List;
 @Getter
 @Setter
 public class MongoshFileChange extends AbstractSQLChange {
+    private String PATH_PROPERTY_NAME = "path";
+    private String RELATIVE_TO_CHANGELOG_FILE_PROPERTY_NAME = "relativeToChangelogFile";
+    private String DBMS_PROPERTY_NAME = "dbms";
+
     private String path;
     private Boolean relativeToChangelogFile;
 
@@ -135,5 +140,9 @@ public class MongoshFileChange extends AbstractSQLChange {
         }
         
         return validationErrors;
+    }
+
+    public Set<String> getSerializableFields() {
+        return Set.of(RELATIVE_TO_CHANGELOG_FILE_PROPERTY_NAME, PATH_PROPERTY_NAME, DBMS_PROPERTY_NAME);
     }
 }
