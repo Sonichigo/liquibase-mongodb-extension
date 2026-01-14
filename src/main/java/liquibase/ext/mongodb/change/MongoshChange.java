@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -67,6 +69,6 @@ public class MongoshChange extends AbstractSQLChange {
     }
 
     public Set<String> getSerializableFields() {
-        return Set.of(MONGO_PROPERTY_NAME, DBMS_PROPERTY_NAME);
+        return new HashSet<>(Arrays.asList(MONGO_PROPERTY_NAME, DBMS_PROPERTY_NAME));
     }
 }

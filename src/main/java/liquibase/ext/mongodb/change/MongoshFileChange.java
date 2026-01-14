@@ -21,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -143,6 +145,6 @@ public class MongoshFileChange extends AbstractSQLChange {
     }
 
     public Set<String> getSerializableFields() {
-        return Set.of(RELATIVE_TO_CHANGELOG_FILE_PROPERTY_NAME, PATH_PROPERTY_NAME, DBMS_PROPERTY_NAME);
+        return new HashSet<>(Arrays.asList(RELATIVE_TO_CHANGELOG_FILE_PROPERTY_NAME, PATH_PROPERTY_NAME, DBMS_PROPERTY_NAME));
     }
 }
