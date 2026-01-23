@@ -1,6 +1,10 @@
-# Liquibase MongoDB Extension
+# Harness Liquibase MongoDB Extension
 
-[![Build Status](https://travis-ci.com/liquibase/liquibase-mongodb.svg?branch=master)](https://travis-ci.com/liquibase/liquibase-mongodb)
+*This is a Harness-enhanced fork of the [Liquibase MongoDB Extension](https://github.com/liquibase/liquibase-mongodb) with additional features and improvements.*
+
+**Maven Repository**: [Harness Maven Public Repository](https://console.cloud.google.com/artifacts/maven/gar-prod-setup/us/harness-maven-public/io.harness:liquibase-mongodb-dbops-extension?project=gar-prod-setup)
+
+**Documentation**: [Harness Database DevOps - MongoDB Commands](https://developer.harness.io/docs/database-devops/concepts/database-devops/concepts/mongodb-command)
 
 ## Table of contents
 
@@ -11,22 +15,45 @@
 1. [Getting Started](#getting-started)
 1. [Running tests](#running-tests)
 1. [Integration](#integration)
+1. [Harness Enhancements](#harness-enhancements)
 1. [Contributing](#contributing)
 1. [License](#license)
 
 <a name="introduction"></a>
 ## Introduction
 
-This is a Liquibase extension for MongoDB support. 
+This is a **Harness-enhanced** Liquibase extension for MongoDB support, forked from the [Liquibase MongoDB Extension](https://github.com/liquibase/liquibase-mongodb).
 
-It resulted as an alternative to existing MongoDB evolution tools.  
-Majority of them are basically wrappers over [`db.eval`](https://docs.mongodb.com/manual/reference/method/db.eval/#db.eval) shell method that is deprecated staring from MongoDB 4.2.
+The original extension resulted as an alternative to existing MongoDB evolution tools that were basically wrappers over the deprecated [`db.eval`](https://docs.mongodb.com/manual/reference/method/db.eval/#db.eval) shell method (deprecated starting from MongoDB 4.2).
 
-In order to call specific `mongo-java-driver` specific methods, 
-Liquibase turned to be the most feasible tool to extend as it allows to define change sets to fit driver methods arguments.
+**Harness has enhanced this extension** with additional features including:
+- **Mongo Native Executor** - Execute native MongoDB operations with improved performance
+- Enhanced database change management capabilities
+- Additional operational improvements and optimizations
+
+The extension allows calling specific `mongo-java-driver` methods through Liquibase's changeset framework, providing enterprise-grade database change management for MongoDB deployments.
 
 <a name="release-notes"></a>
 ## Release Notes
+
+### Harness Enhanced Releases
+
+#### 1.1.0-4.24.0
+* **Selective Property Serialization** - Enhanced `mongo` and `mongoFile` changeTypes with selective property serialization
+* Prevents unnecessary properties from being serialized in changeset YAML files
+* Improves changeset file cleanliness and reduces file size
+* Based on Liquibase 4.24.0
+* **JAR Download**: [Maven Repository](https://console.cloud.google.com/artifacts/maven/gar-prod-setup/us/harness-maven-public/io.harness:liquibase-mongodb-dbops-extension/1.1.0-4.24.0?project=gar-prod-setup)
+
+#### 1.0.0-4.24.0
+* **Mongo Native Executor Support** - Initial release with mongo native executor capabilities
+* Added new `mongo` changeType for inline JavaScript/MongoDB shell commands via mongosh
+* Added new `mongoFile` changeType for executing MongoDB shell commands from external files
+* Enhanced MongoDB operation execution with improved performance
+* Based on Liquibase 4.24.0
+* **JAR Download**: [Maven Repository](https://console.cloud.google.com/artifacts/maven/gar-prod-setup/us/harness-maven-public/io.harness:liquibase-mongodb-dbops-extension/1.0.0-4.24.0?project=gar-prod-setup)
+
+### Upstream Liquibase MongoDB Extension Releases
 
 #### 4.24.0
 * Support for Liquibase 4.24.0
@@ -129,6 +156,10 @@ Inserts a Single Document into a collection [insert](https://docs.mongodb.com/ma
 Provides a helper to run specified database commands. This is the preferred method to issue database commands, as it provides a consistent interface between the shell and drivers
 * [__adminCommand__](https://docs.mongodb.com/manual/reference/method/db.adminCommand/#db.adminCommand) - 
 Provides a helper to run specified database commands against the admin database
+* [__mongo__](https://developer.harness.io/docs/database-devops/concepts/database-devops/concepts/mongodb-command) - 
+Executes inline JavaScript/MongoDB shell commands via mongosh (Harness Enhancement)
+* [__mongoFile__](https://developer.harness.io/docs/database-devops/concepts/database-devops/concepts/mongodb-command) - 
+Executes JavaScript/MongoDB shell commands from external files via mongosh (Harness Enhancement)
 
 <a name="connection-string"></a>
 ## Connection String Formats
@@ -170,7 +201,7 @@ jackson-databind:2.11.3
 * Clone the project
 
 ```shell
-git clone https://github.com/liquibase/liquibase-mongodb
+git clone https://github.com/harness-community/liquibase-mongodb-extension
 ```  
 * [Run tests](#running-tests)
 
@@ -207,11 +238,38 @@ mvn clean install -Prun-its,mongo-3x
 
 [Quick start Application for NoSql liquibase extensions](https://github.com/alexandru-slobodcicov/liquibase-nosql-quickstart)
 
+<a name="harness-enhancements"></a>
+## Harness Enhancements
+
+This Harness fork includes several enhancements over the Liquibase MongoDB extension:
+
+### **Mongo Native Executor**
+- Enhanced native MongoDB operation execution
+- Better integration with MongoDB-specific features
+- Support for MongoDB-specific commands and operations
+
+### **Additional Features**
+- Enhanced error handling and logging
+- Improved compatibility with various MongoDB deployment scenarios
+- Additional operational improvements for enterprise use cases
+
+*For detailed information about Harness-specific features, refer to the [Harness Database DevOps MongoDB Documentation](https://developer.harness.io/docs/database-devops/concepts/database-devops/concepts/mongodb-command).*
+
 <a name="integration"></a>
 ## Integration
 
-### Add dependency: 
+### Add dependency:
 
+**For Harness Enhanced Version:**
+```xml
+<dependency>
+    <groupId>io.harness</groupId>
+    <artifactId>liquibase-mongodb-dbops-extension</artifactId>
+    <version>${harness-liquibase-mongodb.version}</version>
+</dependency>
+```
+
+**Original Liquibase Version:**
 ```xml
 <dependency>
     <groupId>org.liquibase.ext</groupId>
