@@ -198,13 +198,37 @@ jackson-databind:2.11.3
 
 ### Installing
 
-* Clone the project
+You can either build from source or download the prebuilt JAR from the Harness Maven repository.
 
+#### 1. Download Prebuilt JAR (Recommended)
+
+Download the latest release directly:
+```bash
+curl -L \
+  "https://us-maven.pkg.dev/gar-prod-setup/harness-maven-public/io/harness/liquibase-mongodb-dbops-extension/1.1.0-4.24.0/liquibase-mongodb-dbops-extension-1.1.0-4.24.0.jar" \
+  -o liquibase-mongodb-dbops-extension-1.1.0-4.24.0.jar
+```
+Then place the JAR file into your Liquibase lib directory:
+```sh
+<liquibase-home>/lib
+```
+This makes the extension available to Liquibase CLI.
+
+#### 2. Build from Source
+
+a. Clone the repository
 ```shell
 git clone https://github.com/harness-community/liquibase-mongodb-extension
+cd liquibase-mongodb-extension
 ```  
-* [Run tests](#running-tests)
 
+b. Build the project : `mvn clean install`
+
+c. The generated JAR will be available under: `target/liquibase-mongodb-dbops-extension-<version>.jar`
+
+You can then copy it into your Liquibase **`lib`** directory.
+
+* [Run tests](#running-tests)
 <a name="running-tests"></a>
 ## Running tests
 
@@ -221,15 +245,15 @@ mvn clean install -Prun-its
 ```
 
 #### Run integration test driver backward compatibility
-1. Produce test containing jar
+1. Produce test containing JAR:
 ```shell
 mvn clean install -Ptest-jar
 ```
-2. Go to test-project
+2. Go to test-project:
 ```shell
 cd test-project
 ```
-3. Run backward compatibility test with provided 3x driver
+3. Run backward compatibility test with provided 3x driver:
 ```shell
 mvn clean install -Prun-its,mongo-3x
 ```
