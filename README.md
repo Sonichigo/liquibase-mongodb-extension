@@ -198,21 +198,17 @@ jackson-databind:2.11.3
 
 ### Installing
 
-You can either build from source or download the prebuilt JAR from the Harness Maven repository.
+You can either download a released JAR from the Harness Maven repository or build the project from source.
 
 #### 1. Download Prebuilt JAR (Recommended)
 
-Download the latest release directly:
+Browse available versions in the Harness Maven repository from [Registry](https://console.cloud.google.com/artifacts/maven/gar-prod-setup/us/harness-maven-public/io.harness:liquibase-mongodb-dbops-extension?project=gar-prod-setup). You can then download a specific version using curl, for example:
+
 ```bash
 curl -L \
   "https://us-maven.pkg.dev/gar-prod-setup/harness-maven-public/io/harness/liquibase-mongodb-dbops-extension/1.1.0-4.24.0/liquibase-mongodb-dbops-extension-1.1.0-4.24.0.jar" \
   -o liquibase-mongodb-dbops-extension-1.1.0-4.24.0.jar
 ```
-Then place the JAR file into your Liquibase lib directory:
-```sh
-<liquibase-home>/lib
-```
-This makes the extension available to Liquibase CLI.
 
 #### 2. Build from Source
 
@@ -221,12 +217,23 @@ a. Clone the repository
 git clone https://github.com/harness-community/liquibase-mongodb-extension
 cd liquibase-mongodb-extension
 ```  
-
 b. Build the project : `mvn clean install`
-
 c. The generated JAR will be available under: `target/liquibase-mongodb-dbops-extension-<version>.jar`
 
-You can then copy it into your Liquibase **`lib`** directory.
+#### 3. Move JAR file to Liquibase lib Directory
+
+Once the JAR file is available, we need place the JAR file into your Liquibase lib directory
+Based on Liquibase Installation method, the lib directory will be as follows:
+```sh
+# if liquibase is installed via liquibase website
+`<liquibase-home>/internals/lib`
+
+# if liquibase is installed via brew
+`/opt/homebrew/opt/liquibase/libexec/lib`
+```
+This makes the extension available to **Liquibase CLI**.
+
+---
 
 * [Run tests](#running-tests)
 <a name="running-tests"></a>
